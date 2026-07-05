@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>style.qss</file>
+        <file>pic/background.jfif</file>
+        <file>pic/switchon.png</file>
+        <file>pic/switchoff.png</file>
+        <file>pic/dial.png</file>
+        <file>pic/slider.png</file>
+        <file>pic/fanon.png</file>
+        <file>pic/fanoff.png</file>
+        <file>pic/ledon.png</file>
+        <file>pic/ledoff.png</file>
+        <file>pic/pumpon.png</file>
+        <file>pic/pumpoff.png</file>
+        <file>pic/gread3.png</file>
+        <file>pic/gread2.png</file>
+        <file>pic/gread1.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
+</RCC>

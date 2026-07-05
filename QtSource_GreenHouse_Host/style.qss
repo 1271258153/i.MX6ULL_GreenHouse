@@ -1,0 +1,76 @@
+QListWidget{
+    outline: none;
+    background:rgb(35,30,31);
+    border:0px solid gray;
+    color: rgb(173,175,178);
+    spacing:10px;
+    font-weight:bold;
+}
+QListWidget::Item{
+    height:30px;
+    border:0px solid gray;
+    padding-left:5;
+    font-weight:bold;
+}
+QListWidget::Item:hover{
+    color:rgb(255,255,255);
+    background:transparent;
+    border:0px solid gray;
+}
+QListWidget::Item:selected{
+    background:#00FFFFFF;
+    color:#FFFFFF;
+    border-width:0;
+}
+QStackedWidget{
+    background-image:url(:/pic/background.jfif);
+}
+QLabel{
+    color:rgb(255,255,255);
+    font-weight:bold;
+    font:16px;
+}
+QCheckBox{
+    outline: none;
+}
+QCheckBox::indicator{
+    width: 35px;
+    height: 35px;
+}
+QCheckBox::indicator:enabled:unchecked{
+    image: url(:/pic/switchoff.png);
+}
+QCheckBox::indicator:disenabled:unchecked{
+    image: url(:/pic/switchoff.png);
+}
+QCheckBox::indicator:enabled:checked{
+    image: url(:/pic/switchon.png);
+}
+
+
+QSlider::groove:vertical {
+    background:transparent;
+    width:100px;
+}
+
+QSlider::handle:vertical{
+    border-image:url(:/pic/slider.png);
+}
+QSlider::handle{
+    width:100px;
+    height:30px;
+}
+
+QChartView{
+    background-color:rgba(222,220,220,80);
+}
+QCharts{
+    background-color:rgba(222,220,220,80);
+}
+
+
+
+
+
+
+

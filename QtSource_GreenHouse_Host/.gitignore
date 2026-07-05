@@ -1,0 +1,40 @@
+# qmake build directories
+make/
+arm-make/
+build*/
+debug*/
+release*/
+
+# Qt Creator user settings
+*.pro.user
+*.pro.user.*
+
+# qmake generated
+Makefile*
+*.qmake.stash
+.qmake.cache
+
+# Qt MOC / RCC / UIC
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+
+# Compiled objects & libraries
+*.o
+*.obj
+*.a
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# Application binary
+GreenHouse
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
