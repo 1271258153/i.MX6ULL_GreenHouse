@@ -64,6 +64,8 @@ Module.symvers
 #
 !.gitignore
 !.mailmap
+!.config
+!.config.old
 
 #
 # Generated include files
