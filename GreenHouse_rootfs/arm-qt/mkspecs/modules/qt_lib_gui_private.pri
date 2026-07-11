@@ -1,0 +1,12 @@
+QT.gui_private.VERSION = 5.12.9
+QT.gui_private.name = QtGui
+QT.gui_private.module =
+QT.gui_private.libs = $$QT_MODULE_LIB_BASE
+QT.gui_private.includes = $$QT_MODULE_INCLUDE_BASE/QtGui/5.12.9 $$QT_MODULE_INCLUDE_BASE/QtGui/5.12.9/QtGui
+QT.gui_private.frameworks =
+QT.gui_private.depends = core_private gui
+QT.gui_private.uses =
+QT.gui_private.module_config = v2 internal_module
+QT.gui_private.enabled_features = evdev freetype gif harfbuzz ico jpeg linuxfb multiprocess png tslib tuiotouch vnc
+QT.gui_private.disabled_features = xcb accessibility-atspi-bridge angle_d3d11_qdtd direct2d direct2d1_1 dxgi direct3d11 direct3d11_1 direct3d9 directfb drm_atomic dxgi1_2 dxguid egl egl_x11 eglfs eglfs_brcm eglfs_egldevice eglfs_gbm eglfs_mali eglfs_openwfd eglfs_rcar eglfs_viv eglfs_viv_wl eglfs_vsp2 eglfs_x11 system-freetype fontconfig integrityfb integrityhid kms libinput libinput-axis-api mirclient mtdev system-harfbuzz system-jpeg system-png system-xcb texture_format_astc_experimental vsp2 xlib xcb-xlib xkbcommon
+QMAKE_LIBS_TSLIB = /home/cx/Desktop/linux/tslib-master/arm-tslib/lib/libts.so

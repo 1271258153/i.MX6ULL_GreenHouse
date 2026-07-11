@@ -1,0 +1,21 @@
+/dev/ttyUSB2
+115200
+crtscts
+modem
+persist
+lock
+noauth
+noipdefault
+debug
+nodetach
+user Anyname
+password Anypassword
+ipcp-accept-local
+ipcp-accept-remote
+defaultroute
+usepeerdns
+noccp
+nobsdcomp
+novj
+dump
+

@@ -1,0 +1,5 @@
+#!/bin/sh
+clear
+OPTION_FILE="gosuncn_options"
+DIALER_SCRIPT=$(pwd)/gosuncn_ppp_dialer
+exec pppd file $OPTION_FILE connect "chat -v -f ${DIALER_SCRIPT}"
