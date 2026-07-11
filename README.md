@@ -112,7 +112,7 @@ make                                    # 编译模块
 
 4. MB008 土壤湿度
   - 路径：[drivers/iio/adc/vf610_adc.c](linux-source/drivers/iio/adc/vf610_adc.c)
-  > 内核写好的驱动，无需单独编译成ko文件
+    > 内核写好的驱动，无需单独编译成ko文件
 
 5. ICM20608 六轴 MEMS 传感器(只用到了内波包含的温度传感器)
   - 路径：[drivers/media/spi/icm20608](linux-source/drivers/media/spi/icm20608/icm20608.c)
