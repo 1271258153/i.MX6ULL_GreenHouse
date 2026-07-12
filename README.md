@@ -5,10 +5,13 @@
 
 用户可通过界面远程控制通风、灌溉、补光等执行设备，实现环境参数的闭环监测与调节。项目涵盖 U-Boot 启动配置、BusyBox 根文件系统构建、Linux 字符设备驱动开发，以及 Qt 上位机应用的联调与部署。
 
-## 2. 视频演示
+## 2. 🎬 视频演示
 <video src="https://github.com/user-attachments/assets/05c5bad7-1e2a-4148-a8ab-4c3bb120cad6" controls width="600"></video>
 
-## 3. 开发环境
+## 3. 📝 遇到的问题
+
+
+## 4. 🖥️ 开发环境
 <div align="center">
   <img src="pic/imx6ull.png" width="500" alt="Markdown Logo">
 </div>
@@ -34,7 +37,7 @@
 - 虚拟机版本：`Ubuntu 16.04.7 LTS`
 - 交叉编译器：`arm-linux-gnueabihf-gcc (Linaro GCC 4.9-2017.01) 4.9.4`
 
-## 4. 仓库目录说明
+## 5. 📁 仓库目录说明
 
 ```text
 i.MX6ULL_GreenHouse/
@@ -53,7 +56,7 @@ i.MX6ULL_GreenHouse/
 ├── QtSource_GreenHouse_Host/      # Qt 上位机 / 界面应用
 └── GreenHouse_rootfs/             # 根文件       
 ```
-## 5. U-Boot移植
+## 6. U-Boot移植
 1. 先编译u-boot
 ```bash
 cd uboot
@@ -94,7 +97,29 @@ source mx6ull_alientek_emmc.sh      # 编译 uboot
       J --> K[进入用户空间 / 启动应用]
   ```
 
-## 6. ⚙️驱动源码路径
+## 7. ⚙️ 驱动源码路径
+
+```text
+linux-source/                             # dts
+├── arch/arm/boot/dts/
+│   ├── imx6ull.dtsi                      # SoC 公共描述
+│   └── imx6ull-14x14-evk.dts             # 板级设备树（传感器 / 风扇 / 灌溉节点）
+│    
+└── drivers/                              # driver
+    ├── media/
+    │   ├── i2c/Green_House/
+    │   │   ├── aht20/                    # AHT20 温湿度
+    │   │   ├── sgp30/                    # SGP30 二氧化碳
+    │   │   └── ap3216c/                  # AP3216C 光照
+    │   └── spi/
+    │       └── icm20608/                 # ICM20608（用内部温度）
+    ├── iio/adc/
+    │   └── vf610_adc.c                   # MB008 土壤湿度（内核自带 ADC）
+    └── platform/Green_House/
+        ├── fan/                          # 风扇
+        └── irr/                          # 灌溉
+```
+
 ```bash
 cd linux-source                         # 驱动路径都在 linux-source/ 下
 # 编译驱动模块：
@@ -124,3 +149,63 @@ make                                    # 编译模块
   - 路径：[drivers/platform/Green_House/irr](linux-source/drivers/platform/Green_House/irr/irr.c)
 
 ### 🌿dts路径：[arch/arm/boot/dts/imx6ull-14x14-evk.dts](linux-source/arch/arm/boot/dts/imx6ull-14x14-evk.dts)
+
+## 8. 构建根文件系统
+本项目采用BusyBox构建根文件系统，在本项目的 `GreenHouse_rootfs/` 下。
+在 Uboot 命令行中通过 nfs 挂载根文件系统，bootargs 环境变量设置“root”的格式：
+```shell
+root=/dev/nfs nfsroot=[<server-ip>:]<root-dir>[,<nfs-options>] ip=<client-ip>:<server-ip>:<gwip>:<netmask>:<hostname>:<device>:<autoconf>:<dns0-ip>:<dns1-ip>
+```
+> `<server-ip>`： Ubuntu 的 IP 地址
+> `<root-dir>`： 根文件系统的存放路径
+> `<nfs-options>`： NFS 的其他可选选项，一般不设置
+> `<client-ip>`：开发板的 IP 地址
+> `<gw-ip>`： 网关地址
+> `<netmask>`：子网掩码
+> `<hostname>`：客户机的名字，一般不设置，此值可以空着
+> `<device>`：网卡名
+> `<autoconf>`： 自动配置，一般不使用，所以设置为 off
+> `<dns0-ip>`： DNS0 服务器 IP 地址，不使用
+> `<dns1-ip>`： DNS1 服务器 IP 地址，不使用
+
+根据上面的格式 bootargs 环境变量的 root 值如下：
+```shell
+setenv bootargs 'console=ttymxc0,115200 root=/dev/nfs nfsroot=192.168.1.250:/home/alientek/linux/nfs/rootfs,proto=tcp rw ip=192.168.1.251:192.168.1.250:192.168.1.1:255.255.255.0::eth0:off' # 设置 bootargs
+saveenv # 保存环境变量
+```
+
+## 9. 🎨 Qt 界面设计
+
+```text
+QtSource_GreenHouse_Host/
+├── GreenHouse.pro          # qmake 工程文件（Qt Charts / Network / Widgets）
+├── main.cpp                # 程序入口，加载 style.qss
+├── mainwindow.h/.cpp       # 主界面：监控、图表、自动控制、UDP
+├── readfile.h/.cpp         # 从字符设备节点读取传感器数据
+├── writefile.h/.cpp        # 控制风扇 / 灌溉等执行设备
+├── style.qss               # 全局界面样式
+├── res.qrc                 # 资源清单（图片、qss）
+└── pic/                    # 界面图片资源（开关、风扇、水泵等图标）
+```
+
+本工程为运行在 i.MX6ULL 上的 **Qt Widgets** 上位机应用，依赖模块：`core`、`gui`、`widgets`、`charts`、`network`。
+
+主要功能：
+
+1. **实时监控**：定时器周期通过 `readfile` 访问 `/dev` 下字符设备，采集温湿度、光照、二氧化碳、土壤温湿度等，并刷新首页显示。
+2. **设备控制**：通过 `writefile` 向 `/dev/fan`、`/dev/irr` 等节点写入，控制风扇与灌溉；支持手动开关与自动模式。
+3. **历史曲线**：使用 Qt Charts 绘制环境 / 土壤 / 光照 / CO₂ 等折线图，便于观察参数变化。
+4. **阈值联动**：界面左侧 `QListWidget` + `QStackedWidget` 切换监控、图表、设置等页面；UDP 可用于与外部节点交换数据。
+
+编译之后生成文件 `GreenHouse`，将该文件拷贝到 `GreenHouse_rootfs` 中
+
+## 10. 💾 系统烧写
+在 [GreenHouse_rootfs/etc/profile](GreenHouse_rootfs/etc/profile) 文件中追加自启动 Qt Ui界面
+```bash
+echo "./GreenHouse &" >> /etc/profile
+```
+然后通过 NXP 提供的MfgTool，将 zImage、uboot.imx、dtb 和 rootfs 烧录到开发板中
+<div align="center">
+  <img src="pic/MfgTool.png" width="500" alt="Markdown Logo">
+</div>
+
