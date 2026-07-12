@@ -176,6 +176,7 @@
 		pinctrl-0 = <&pinctrl_beep>;
 		gpio_beep = <&gpio5 1 GPIO_ACTIVE_LOW>;
 	};
+
 	gpio-keys { 
 		compatible = "gpio-keys";
 		#address-cells = <1>;
@@ -187,23 +188,15 @@
 			gpios = <&gpio1 18 GPIO_ACTIVE_LOW>;
 		};
 	};
-	dht11{
-		compatible = "dht11";
-		pinctrl-0 = <&pinctrl_dht11>;
-		gpio_dht11 = <&gpio1 5 GPIO_ACTIVE_LOW>;
-		status = "okay";
-	};
-	Ds18b20{
-		compatible = "Ds18b20";
-		/* pinctrl-0 = <&pinctrl_Ds18b20>; */
-		/*gpio_Ds18b20 = <&gpio1 2 GPIO_ACTIVE_LOW>;*/
-		status = "okay";
-	};
+
+	/* 风扇 */
 	imx_fan{
 		pinctrl-name = "default";
 		pinctrl-0 = <&pinctrl_fan>;
 		gpio_fan = <&gpio1 26 GPIO_ACTIVE_LOW>;
 	};
+
+	/* 灌溉设备 */
 	imx_irr{
 		pinctrl-name = "default";
 		pinctrl-0 = <&pinctrl_irr>;
