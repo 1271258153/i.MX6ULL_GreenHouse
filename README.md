@@ -9,7 +9,7 @@
 <video src="https://github.com/user-attachments/assets/05c5bad7-1e2a-4148-a8ab-4c3bb120cad6" controls width="600"></video>
 
 ## 3. 📝 遇到的问题
-
+[问题记录](./problem.md)
 
 ## 4. 🖥️ 开发环境
 <div align="center">
