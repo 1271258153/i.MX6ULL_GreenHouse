@@ -293,7 +293,7 @@
 	status = "okay";
 
 	ap3216c@1e{
-		compatible = "lsc_ap3216c";
+		compatible = "alientek,ap3216c";
 		reg = <0x1e>;
 	};
 
