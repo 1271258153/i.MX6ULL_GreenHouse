@@ -127,9 +127,12 @@ int sgp30_init(void)
 {
     int ret = 0;
     u8 buf[2];
-    buf[0] = 0x20;
-    buf[1] = 0x03;
+    buf[0] = Init_air_quality >> 8;     // 高8位
+    buf[1] = Init_air_quality & 0xff;   // 低8位
+
+    /* 发送初始化命令 Init_air_quality = 0x2003 */
     ret = sgp30_write_datas(&sgp30,buf,2);
+    /* 等待 100ms */
     mdelay(100);
     return ret;
 }
@@ -139,10 +142,14 @@ u16 sgp30_read_data(void)
     u16 CO2 = 0;
     u8 r_data[5] = {0};
     u8 buf[2];
-    buf[0] = 0x20;
-    buf[1] = 0x08;
+    buf[0] = Measure_air_quality >> 8;
+    buf[1] = Measure_air_quality & 0xff;
+
+    /* 发送测量命令 Measure_air_quality = 0x2008 */
     sgp30_write_datas(&sgp30,buf,2);
     mdelay(100);
+
+    /* 读取测量数据 */
     sgp30_read_datas(&sgp30,r_data,5);
     CO2 = ((u16)r_data[0] << 8) | r_data[1];
     return CO2;
@@ -150,6 +157,7 @@ u16 sgp30_read_data(void)
 
 static int sgp30_probe(struct i2c_client *client, const struct i2c_device_id *dev_id)
 {
+    int ret = 0;
     u16 CO2_val;
     sgp30.private_data = client;
     
@@ -169,6 +177,7 @@ static int sgp30_probe(struct i2c_client *client, const struct i2c_device_id *de
         }
     }
 
+    /* 获取主设备号和次设备号 */
     sgp30.major = MAJOR(sgp30.dev);
     sgp30.minor = MINOR(sgp30.dev);
     printk("MAJOR = %d  MINOR = %d \n",sgp30.major,sgp30.minor);
@@ -192,7 +201,14 @@ static int sgp30_probe(struct i2c_client *client, const struct i2c_device_id *de
         goto create_device_false;
     }
 
-    sgp30_init();
+    /* 初始化 SGP30 */
+    ret = sgp30_init();
+    if(ret < 0){
+        printk("init SGP30 false!\n");
+        goto create_device_false;
+    }
+
+    /* 读取 SGP30 数据 */
     CO2_val = sgp30_read_data();
     if(CO2_val == 400){
         printk("SGP30 is OK!\n");
