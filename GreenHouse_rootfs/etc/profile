@@ -26,5 +26,5 @@ export QT_QPA_FB_TSLIB=1
 
 
 #./start &
-./GreenHouse &
 quectel-CM -s &
+./GreenHouse &
