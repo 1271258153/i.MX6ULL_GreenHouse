@@ -100,19 +100,16 @@ source mx6ull_alientek_emmc.sh      # 编译 uboot
 ## 7. ⚙️ 驱动源码路径
 
 ```text
-linux-source/                             # dts
+linux-source/
 ├── arch/arm/boot/dts/
 │   ├── imx6ull.dtsi                      # SoC 公共描述
 │   └── imx6ull-14x14-evk.dts             # 板级设备树（传感器 / 风扇 / 灌溉节点）
-│    
-└── drivers/                              # driver
-    ├── media/
-    │   ├── i2c/Green_House/
-    │   │   ├── aht20/                    # AHT20 温湿度
-    │   │   ├── sgp30/                    # SGP30 二氧化碳
-    │   │   └── ap3216c/                  # AP3216C 光照
-    │   └── spi/
-    │       └── icm20608/                 # ICM20608（用内部温度）
+└── drivers/
+    ├── GreenHouse_sensor/                # 温室相关传感器驱动（外编 .ko）
+    │   ├── aht20/                        # AHT20 温湿度
+    │   ├── sgp30/                        # SGP30 二氧化碳
+    │   └── ap3216c/                      # AP3216C 光照
+    │   └── icm20608/                     # ICM20608（用内部温度）
     ├── iio/adc/
     │   └── vf610_adc.c                   # MB008 土壤湿度（内核自带 ADC）
     └── platform/Green_House/
@@ -123,24 +120,24 @@ linux-source/                             # dts
 ```bash
 cd linux-source                         # 驱动路径都在 linux-source/ 下
 # 编译驱动模块：
-cd drivers/media/i2c/Green_House/xxx    # 进入驱动目录下
+cd drivers/GreenHouse_sensor/xxx        # 进入对应驱动目录
 make                                    # 编译模块
 ```
 1. AHT20 温湿度传感器
-  - 路径：[drivers/media/i2c/Green_House/aht20](linux-source/drivers/media/i2c/Green_House/aht20/aht20.c)
+  - 路径：[drivers/GreenHouse_sensor/aht20](linux-source/drivers/GreenHouse_sensor/aht20/aht20.c)
 
 2. SGP30 二氧化碳传感器
-  - 路径：[drivers/media/i2c/Green_House/sgp30](linux-source/drivers/media/i2c/Green_House/sgp30/sgp30.c)
+  - 路径：[drivers/GreenHouse_sensor/sgp30](linux-source/drivers/GreenHouse_sensor/sgp30/sgp30.c)
 
 3. AP3216c 光照传感器
-  - 路径：[drivers/media/i2c/Green_House/ap3216c](linux-source/drivers/media/i2c/Green_House/ap3216c/ap3216c.c)
+  - 路径：[drivers/GreenHouse_sensor/ap3216c](linux-source/drivers/GreenHouse_sensor/ap3216c/ap3216c.c)
 
 4. MB008 土壤湿度
   - 路径：[drivers/iio/adc/vf610_adc.c](linux-source/drivers/iio/adc/vf610_adc.c)
     > 内核写好的驱动，无需单独编译成ko文件
 
 5. ICM20608 六轴 MEMS 传感器(只用到了内波包含的温度传感器)
-  - 路径：[drivers/media/spi/icm20608](linux-source/drivers/media/spi/icm20608/icm20608.c)
+  - 路径：[drivers/GreenHouse_sensor/icm20608](linux-source/drivers/GreenHouse_sensor/icm20608/icm20608.c)
 
 6. 风扇
   - 路径：[drivers/platform/Green_House/fan](linux-source/drivers/platform/Green_House/fan/fan.c)
