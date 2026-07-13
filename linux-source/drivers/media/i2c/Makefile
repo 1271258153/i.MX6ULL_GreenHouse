@@ -79,6 +79,3 @@ obj-$(CONFIG_VIDEO_IR_I2C)  += ir-kbd-i2c.o
 obj-$(CONFIG_VIDEO_ML86V7667)	+= ml86v7667.o
 obj-$(CONFIG_VIDEO_OV2659)	+= ov2659.o
 
-obj-m += Green_House/aht20/
-obj-m += Green_House/sgp30/
-obj-m += Green_House/ap3216c/
