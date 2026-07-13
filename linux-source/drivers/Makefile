@@ -166,3 +166,7 @@ obj-$(CONFIG_RAS)		+= ras/
 obj-$(CONFIG_THUNDERBOLT)	+= thunderbolt/
 obj-$(CONFIG_CORESIGHT)		+= hwtracing/coresight/
 obj-$(CONFIG_ANDROID)		+= android/
+
+obj-m += GreenHouse_sensor/aht20/
+obj-m += GreenHouse_sensor/sgp30/
+obj-m += GreenHouse_sensor/ap3216c/
