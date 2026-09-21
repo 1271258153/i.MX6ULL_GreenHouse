@@ -205,4 +205,5 @@ echo "./GreenHouse &" >> /etc/profile
 <div align="center">
   <img src="pic/MfgTool.png" width="500" alt="Markdown Logo">
 </div>
-
+## PS:分布式光伏电站监测系统---实物图 
+<img width="436" height="327" alt="image" src="https://github.com/user-attachments/assets/4c465cb4-d8ee-473e-aa13-a508db5764cf" />
